@@ -1,7 +1,13 @@
+<p align="center">
+<a href="https://www.pluginlab.ai">
+  <img width="250" height="250" src="https://uploads-ssl.webflow.com/6446ea87f99b6dc7c2e8c9cb/64470266b86f5166fd19a752_white-logo.svg">
+  </a>
+</p>
+
 Want to host or set up analytics for your ChatGPT plugin in minutes ? Check out [pluginlab.ai](https://www.pluginlab.ai) !
 
-![PluginLab]('https://uploads-ssl.webflow.com/6446ea87f99b6dc7c2e8c9cb/64470266b86f5166fd19a752_white-logo.svg')
 
+# ChatGPT Plugin Validator
 
 A package that validates ChatGPT plugin manifests and ensure they follow the security guidelines.
 
