@@ -1,0 +1,41 @@
+{
+  "name": "@pluginlab/chatgpt-plugin-validator",
+  "version": "0.0.1",
+  "description": "A package that validates ChatGPT plugin manifests and ensure they follow the security guidelines.",
+  "private": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build-only": "ts-node-esm ./scripts/build.ts",
+    "emit-types": "tsc --outDir ./dist --declaration  --emitDeclarationOnly",
+    "build": "rimraf ./dist && run-p emit-types build-only",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "safe-build": "run-s lint build",
+    "dev": "onchange \"src/**/*.ts\" -- npm run build"
+  },
+  "keywords": [],
+  "author": "Aurélien Brabant <contact@aurelienbrabant.fr>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "colors": "^1.4.0",
+    "esbuild": "^0.17.0",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "prettier": "^2.8.3",
+    "rimraf": "^4.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "parse-domain": "^7.0.1"
+  }
+}

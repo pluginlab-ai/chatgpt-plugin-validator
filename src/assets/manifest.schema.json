@@ -1,0 +1,205 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "name_for_human": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "name_for_model": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "description_for_human": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "description_for_model": {
+      "type": "string",
+      "maxLength": 8000
+    },
+    "auth": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ManifestNoAuth"
+        },
+        {
+          "$ref": "#/definitions/ManifestServiceHttpAuth"
+        },
+        {
+          "$ref": "#/definitions/ManifestUserHttpAuth"
+        },
+        {
+          "$ref": "#/definitions/ManifestOAuthAuth"
+        }
+      ]
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["openapi"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "is_user_authenticated": {
+          "type": "boolean"
+        }
+      },
+      "required": ["type", "url", "is_user_authenticated"]
+    },
+    "logo_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "contact_email": {
+      "type": "string",
+      "format": "email"
+    },
+    "legal_info_url": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "required": [
+    "schema_version",
+    "name_for_human",
+    "name_for_model",
+    "description_for_human",
+    "description_for_model",
+    "auth",
+    "api",
+    "logo_url",
+    "contact_email",
+    "legal_info_url"
+  ],
+  "definitions": {
+    "BaseManifestAuth": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["none", "service_http", "user_http", "oauth"]
+        },
+        "instructions": {
+          "type": "string"
+        }
+      },
+      "required": ["type"]
+    },
+    "ManifestNoAuth": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseManifestAuth"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "ManifestServiceHttpAuth": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseManifestAuth"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "service_http"
+            },
+            "authorization_type": {
+              "type": "string",
+              "enum": ["bearer", "basic"]
+            },
+            "verification_tokens": {
+              "type": "object",
+              "patternProperties": {
+                "^[a-zA-Z0-9]*$": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": ["authorization_type", "verification_tokens"]
+        }
+      ]
+    },
+    "ManifestUserHttpAuth": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseManifestAuth"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "user_http"
+            },
+            "authorization_type": {
+              "type": "string",
+              "enum": ["bearer", "basic"]
+            }
+          },
+          "required": ["authorization_type"]
+        }
+      ]
+    },
+    "ManifestOAuthAuth": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseManifestAuth"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "oauth"
+            },
+            "client_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "authorization_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "authorization_content_type": {
+              "type": "string"
+            },
+            "verification_tokens": {
+              "type": "object",
+              "patternProperties": {
+                "^[a-zA-Z0-9]*$": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "client_url",
+            "scope",
+            "authorization_url",
+            "authorization_content_type",
+            "verification_tokens"
+          ]
+        }
+      ]
+    }
+  }
+}
