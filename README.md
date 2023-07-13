@@ -4,7 +4,7 @@
   </a>
 </p>
 
-Want to host or set up analytics for your ChatGPT plugin in minutes ? Check out [pluginlab.ai](https://www.pluginlab.ai) !
+Want to get users and start making money out of your ChatGPT plugin? Check out [pluginlab.ai](https://www.pluginlab.ai) !
 
 
 # ChatGPT Plugin Validator
@@ -19,11 +19,22 @@ Install the package:
 npm install --save @pluginlab/chatgpt-plugin-validator
 ```
 
+# Migrate to V1
+
+## ESM to CJS migration
+
+The package now gets compiled to CJS which is also supported by ESM environments.
+That choice was made to make it easy to get it working on nodejs-powered backends.
+Many frameworks are not ready to support ESM yet.
+
+## Parsing the manifest
+
+The signature of the `parseManifest` method was changed to better fit javascript coding standards.
+Now `parseManifest` returns the typed manifest if it is correct or throws a `ParseManifestError` that contains the parsing errors otherwise.
+
 ## Usage
 
 ### Parse and validate a plugin manifest
-
-To parse a plugin manifest, use the `parseManifest` function:
 
 ```ts
 import { parseManifest } from '@pluginlab/chatgpt-plugin-validator';

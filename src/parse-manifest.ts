@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import Ajv, { ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 
 import * as manifestSchema from './assets/manifest.schema.json';
@@ -10,8 +10,31 @@ addFormats(ajv);
 
 const validateManifest = ajv.compile<Manifest>(manifestSchema);
 
-export const isValidManifest = (
+export class ParseManifestError extends Error {
+	constructor(message: string, public readonly errors: ErrorObject[]) {
+		super(message);
+		this.name = 'ParseManifestError';
+	}
+
+	public toString(): string {
+		return `${this.name}: ${this.message}\n${this.errors.map((error) => error.message).join('\n')}`;
+	}
+}
+
+/**
+ * Parses a manifest and validates it against the JSON schema.
+ * @param manifest The manifest to parse.
+ * @throws {ParseManifestError} If the manifest is invalid.
+ * @returns The parsed manifest.
+ */
+export const parseManifest = (
   manifest: Record<string, any>,
-): manifest is Manifest => {
-	return validateManifest(manifest);
+): Manifest => {
+	const isValid = validateManifest(manifest);
+
+	if (!isValid) {
+		throw new ParseManifestError('Invalid manifest', validateManifest.errors ?? []);
+	}
+
+	return manifest;
 };
