@@ -1,28 +1,23 @@
-import { ParseResultType, parseDomain } from 'parse-domain';
-import { ValueOrError } from 'src/interfaces/common.types';
+import { parse } from "tldts";
 
-export const getRootDomain = (manifestDomain: string): ValueOrError<string> => {
-  const rootDomainParseResult = parseDomain(manifestDomain);
+export const getRootDomain = (manifestDomain: string): string => {
+	const { domain, hostname, subdomain, publicSuffix } = parse(manifestDomain);
 
-  if (rootDomainParseResult.type !== ParseResultType.Listed) {
-    const error = new Error(
-      `The root domain must be a listed domain. Received: ${manifestDomain}`,
-    );
+	if (!domain) {
+		throw new Error('Could not parse domain');
+	}
 
-    return [null, error];
-  }
+	if (!publicSuffix) {
+		throw new Error('Could not parse public suffix');
+	}
 
-  const {
-    domain: rootDomain,
-    subDomains,
-    topLevelDomains,
-  } = rootDomainParseResult;
+	if (!hostname) {
+		throw new Error('Could not parse hostname');
+	}
 
-  if (subDomains.length === 1 && subDomains[0] === 'www') {
-    const shortenedRootDomain = `${rootDomain}.${topLevelDomains.join('.')}`;
+	if (subdomain === 'www') {
+		return domain;
+	}
 
-    return [shortenedRootDomain, null];
-  }
-
-  return [manifestDomain, null];
+	return hostname;
 };

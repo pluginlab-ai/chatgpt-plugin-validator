@@ -35,6 +35,6 @@
   "dependencies": {
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "parse-domain": "^7.0.1"
+    "tldts": "^6.0.11"
   }
 }
