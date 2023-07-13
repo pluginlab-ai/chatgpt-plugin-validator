@@ -32,6 +32,11 @@ Many frameworks are not ready to support ESM yet.
 The signature of the `parseManifest` method was changed to better fit javascript coding standards.
 Now `parseManifest` returns the typed manifest if it is correct or throws a `ParseManifestError` that contains the parsing errors otherwise.
 
+## Getting root domain
+
+Same thing than for parsing the manifest. The signature has been rewritten in a more idiomatic way.
+It either returns the root domain or throws an error if the domain is not parsable for some reason.
+
 ## Usage
 
 ### Parse and validate a plugin manifest
@@ -93,6 +98,6 @@ This package exports a function that, given the domain of the manifest, returns 
 ```ts
 import { getRootDomain } from '@pluginlab/chatgpt-plugin-validator';
 
-const [rootDomain1, domain1Error] = getRootDomain('myplugin.pluginlab.ai'); // rootDomain1 should be 'myplugin.pluginlab.ai'
-const [rootDomain2, domain2Error] = getRootDomain('www.pluginlab.ai'); // rootDomain2 should be 'pluginlab.ai'
+const rootDomain1 = getRootDomain('myplugin.pluginlab.ai'); // rootDomain1 should be 'myplugin.pluginlab.ai'
+const rootDomain2 = getRootDomain('www.pluginlab.ai'); // rootDomain2 should be 'pluginlab.ai'
 ```
