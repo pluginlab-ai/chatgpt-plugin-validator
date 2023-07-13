@@ -1,13 +1,13 @@
-import { build } from 'esbuild';
-import { join } from 'path';
-import colors from 'colors';
-import { readFileSync } from 'fs';
+const { build } = require('esbuild')
+const { join } = require('path')
+const colors = require('colors')
+const { readFileSync } = require('fs')
 
 const packageJson = JSON.parse(
   readFileSync(join(process.cwd(), 'package.json'), 'utf8'),
 );
 
-const log = (s: string) => {
+const log = (s) => {
   console.log(
     `${colors.cyan(`${packageJson.name}`)} ${colors.gray('>>')} ${s}`,
   );
@@ -21,7 +21,7 @@ const buildPackage = async () => {
     ],
     minify: false,
     target: 'ES2015',
-    format: 'esm',
+    format: 'cjs',
     bundle: true,
     entryPoints: [join(process.cwd(), 'src', 'index.ts')],
     outfile: packageJson.main,

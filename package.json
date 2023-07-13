@@ -1,13 +1,12 @@
 {
   "name": "@pluginlab/chatgpt-plugin-validator",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "A package that validates ChatGPT plugin manifests and ensure they follow the security guidelines.",
   "private": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
   "scripts": {
-    "build-only": "ts-node-esm ./scripts/build.ts",
+    "build-only": "node ./scripts/build.js",
     "emit-types": "tsc --outDir ./dist --declaration  --emitDeclarationOnly",
     "build": "rimraf ./dist && run-p emit-types build-only",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

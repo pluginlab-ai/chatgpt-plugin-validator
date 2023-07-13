@@ -1,5 +1,5 @@
 import { ParseResultType, parseDomain } from 'parse-domain';
-import { ValueOrError } from 'src/interfaces/common.types.js';
+import { ValueOrError } from 'src/interfaces/common.types';
 
 export const getRootDomain = (manifestDomain: string): ValueOrError<string> => {
   const rootDomainParseResult = parseDomain(manifestDomain);
