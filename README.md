@@ -37,17 +37,21 @@ Now `parseManifest` returns the typed manifest if it is correct or throws a `Par
 ### Parse and validate a plugin manifest
 
 ```ts
-import { parseManifest } from '@pluginlab/chatgpt-plugin-validator';
+import { parseManifest, ParseManifestError } from '@pluginlab/chatgpt-plugin-validator';
 // assuming we are in a Node.js environment, loading the manifest from a file
 import { readFileSync } from 'fs';
 
 const manifestData = readFileSync('manifest.json', 'utf-8');
 const json = JSON.parse(manifest);
 
-const [manifest, parseError] = parseManifest(json);
+try {
+    const manifest = parseManifest(json);
+} catch (error) {
+    if (error instanceof ParseManifestError) {
+        console.error(`Failed to parse manifest: ${error}`);
+    }
 
-if (parseError) {
-    throw parseError;
+    throw error;
 }
 
 console.log(`Successfully loaded manifest for plugin ${manifest.name_for_human}.`);
