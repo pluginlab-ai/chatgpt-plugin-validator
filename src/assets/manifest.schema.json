@@ -47,11 +47,8 @@
           "type": "string",
           "format": "uri"
         },
-        "is_user_authenticated": {
-          "type": "boolean"
-        }
       },
-      "required": ["type", "url", "is_user_authenticated"]
+      "required": ["type", "url"]
     },
     "logo_url": {
       "type": "string",
