@@ -44,7 +44,6 @@ export type ManifestAuth =
 export interface Api {
   type: 'openapi';
   url: string;
-  is_user_authenticated: boolean;
 }
 
 export interface Manifest {

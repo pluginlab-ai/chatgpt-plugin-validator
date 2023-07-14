@@ -1,6 +1,6 @@
 {
   "name": "@pluginlab/chatgpt-plugin-validator",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A package that validates ChatGPT plugin manifests and ensure they follow the security guidelines.",
   "private": false,
   "main": "./dist/index.js",
